@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Compra Realizada{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 40px auto; text-align: center;">
+    <div class="card-body">
+        <h1 class="card-title" style="color: #28a745;">Obrigado!</h1>
+        <p>Sua compra foi realizada com sucesso.</p>
+        <p>Em breve você receberá mais detalhes no seu e-mail.</p>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'lista_produtos' %}" class="btn">Voltar para a loja</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

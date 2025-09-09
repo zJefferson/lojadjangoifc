@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Produto: {{ produto.nome }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{ produto.nome }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/400x300.png?text=Sem+Imagem" class="img-fluid" alt="Sem Imagem">
+                {% endif %}
+            </div>
+
+            <div class="col-md-7">
+                <h2 class="card-title">{{ produto.nome }}</h2>
+                <p class="h4">R$ {{ produto.preco }}</p>
+                <p>
+                    <strong>Status:</strong>
+                   <span class="badge {% if produto.disponivel and produto.quantidade > 0 %} bg-success {% else %} bg-danger {% endif %}">
+                    {% if produto.disponivel and produto.quantidade > 0 %}
+                        Disponível
+                    {% else %}
+                        Indisponível
+                    {% endif %}
+                    </span>
+                </p>
+
+                <div class="mt-4">
+                    <form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Adicionar ao Carrinho</button>
+                    </form>
+                    
+                    <a href="{% url 'lista_produtos' %}" class="btn">
+                        &larr; Voltar para a lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

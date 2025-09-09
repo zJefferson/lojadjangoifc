@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Seu Carrinho{% endblock %}
+
+{% block content %}
+    <h1>Seu Carrinho de Compras</h1>
+
+    {% if carrinho|length > 0 %}
+        <div class="card">
+            <div class="card-body">
+                <table style="width:100%; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço Unitário</th>
+                            <th>Preço Total</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in carrinho %}
+                            {% with produto=item.produto %}
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>{{ item.quantidade }}</td>
+                                <td>R$ {{ item.preco }}</td>
+                                <td>R$ {{ item.preco_total }}</td>
+                                <td>
+                                    <a href="{% url 'remover_do_carrinho' produto.id %}" style="color: red; text-decoration: none;">Remover</a>
+                                </td>
+                            </tr>
+                            {% endwith %}
+                        {% endfor %}
+                        <tr style="font-weight: bold; border-top: 1px solid #ccc;">
+                            <td colspan="3" style="text-align: right; padding-top: 10px;">Total:</td>
+                            <td style="padding-top: 10px;">R$ {{ carrinho.get_total_preco }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: right;">
+             <a href="{% url 'lista_produtos' %}" class="btn">Continuar comprando</a>
+             <a href="{% url 'checkout' %}" class="btn" style="background-color: #28a745;">Finalizar Compra</a>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info">
+            Seu carrinho está vazio.
+        </div>
+    {% endif %}
+{% endblock %}

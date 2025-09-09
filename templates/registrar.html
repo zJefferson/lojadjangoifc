@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Criar Conta{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: auto;">
+    <div class="card-body">
+        <h2 class="card-title">Criar uma Conta</h2>
+        <p>Preencha o formulário para se registrar.</p>
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group mb-3">
+                    <label class="form-label">{{ field.label_tag }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small style="display: block;">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn">Criar minha conta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

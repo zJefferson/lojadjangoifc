@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Loja</title>
+    <link rel="stylesheet" href="{% static 'loja/style.css' %}">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'lista_produtos' %}">Loja</a>
+            <div class="menu">
+                <a href="{% url 'lista_produtos' %}">Produtos</a>
+                <a href="{% url 'produtos_filtrados' %}">Pesquisar</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+                
+                {% if user.is_authenticated %}
+                    <span style="color: white; padding: 8px 12px;">Olá, {{ user.first_name|default:user.username }}!</span>
+                    <a href="{% url 'ver_carrinho' %}">Carrinho ({{ carrinho|length }})</a>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline; margin: 0; padding: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'registrar' %}">Registrar</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        {% if messages %}
+            <div style="margin-top: 20px;">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" style="padding: 15px; border-radius: 5px; background-color: #f8d7da; color: #721c24;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %} {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Loja</p>
+    </footer>
+
+</body>
+</html>

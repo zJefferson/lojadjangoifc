@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Bem-vindo{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 40px auto; text-align: center;">
+    <div class="card-body">
+        <h1 class="card-title">Bem-vindo, {{ novo_usuario.first_name }}!</h1>
+        <p>Sua conta foi criada com sucesso.</p>
+        <a href="{% url 'login' %}" class="btn">Fazer Login</a>
+    </div>
+</div>
+{% endblock %}

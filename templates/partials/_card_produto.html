@@ -1,0 +1,20 @@
+<div class="card shadow-sm mb-4">
+    {% if produto.imagem %}
+        <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}" style="height: 200px; object-fit: cover;">
+    {% else %}
+        <img src="https://via.placeholder.com/300x200.png?text=Sem+Imagem" class="card-img-top" alt="Sem Imagem" style="height: 200px; object-fit: cover;">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ produto.nome }}</h5>
+        <p class="card-text">Preço: <strong>R$ {{ produto.preco }}</strong></p>
+        
+        <span class="badge {% if produto.disponivel and produto.quantidade > 0 %} bg-success {% else %} bg-danger {% endif %}">
+            {% if produto.disponivel and produto.quantidade > 0 %}
+                Disponível
+            {% else %}
+                Indisponível
+            {% endif %}
+        </span>
+        <a href="{% url 'produto_detail' produto.pk %}" class="btn btn-primary btn-sm mt-3">Ver Detalhes</a>
+    </div>
+</div>
