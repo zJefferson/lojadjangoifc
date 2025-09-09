@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Minha Loja</title>
     <link rel="stylesheet" href="{% static 'loja/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -17,17 +20,34 @@
                 <a href="#">Sobre</a>
                 <a href="#">Contato</a>
                 
-                {% if user.is_authenticated %}
-                    <span style="color: white; padding: 8px 12px;">Olá, {{ user.first_name|default:user.username }}!</span>
-                    <a href="{% url 'ver_carrinho' %}">Carrinho ({{ carrinho|length }})</a>
-                    <form action="{% url 'logout' %}" method="post" style="display: inline; margin: 0; padding: 0;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-logout">Logout</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'registrar' %}">Registrar</a>
-                {% endif %}
+               {% if user.is_authenticated %}
+        <a href="{% url 'ver_carrinho' %}">Carrinho ({{ carrinho|length }})</a>
+
+    <div class="dropdown">
+    <button class="dropdown-toggle" id="userMenuButton">
+        Olá, {{ user.first_name|default:user.username }}! &#9662;
+    </button>
+    
+    <div class="dropdown-menu" id="userDropdownMenu">
+        
+        <form action="{% url 'minha_conta' %}" method="get" style="margin: 0;">
+            <button type="submit" class="dropdown-item">Minha Conta</button>
+        </form>
+
+        <div class="dropdown-divider"></div>
+
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit" class="dropdown-item">Sair</button>
+        </form>
+
+    </div>
+    </div>
+
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'registrar' %}">Registrar</a>
+    {% endif %}
             </div>
         </div>
     </nav>
@@ -49,6 +69,30 @@
     <footer class="footer">
         <p>Loja</p>
     </footer>
+
+
+    <script>
+        // Verifica se o botão do menu do usuário existe na página
+        const userMenuButton = document.getElementById('userMenuButton');
+        if (userMenuButton) {
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+
+            // Abre/fecha o menu ao clicar no botão
+            userMenuButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Impede que o clique feche o menu imediatamente
+                userDropdownMenu.classList.toggle('show');
+            });
+
+            // Fecha o menu se o usuário clicar em qualquer outro lugar da página
+            window.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target)) {
+                    if (userDropdownMenu.classList.contains('show')) {
+                        userDropdownMenu.classList.remove('show');
+                    }
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>

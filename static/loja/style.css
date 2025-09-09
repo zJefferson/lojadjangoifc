@@ -1,24 +1,112 @@
-/* Geral */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
+/* static/loja/style.css */
+
+/* ==========================================================================
+   1. CONFIGURAÇÕES GLOBAIS E VARIÁVEIS DE DESIGN (DESIGN SYSTEM)
+   ========================================================================== */
+
+/*
+ * :root -> Define variáveis CSS que podem ser reutilizadas em todo o site.
+ * Isso centraliza as definições de cores, fontes e outros valores, facilitando
+ * a manutenção do design e garantindo consistência visual.
+ */
+:root {
+    /* Paleta de Cores */
+    --cor-primaria: #005bff;
+    --cor-secundaria: #004acc; /* Tom mais escuro para hover de botões */
+    --cor-sucesso: #28a745;
+    --cor-perigo: #dc3545;
+    --cor-fundo: #f4f7f9;
+    --cor-branco: #ffffff;
+    --cor-borda: #dee2e6;
+    --cor-texto: #333333;
+    --cor-texto-claro: #6c757d;
+
+    /* Tipografia */
+    --fonte-principal: 'Poppins', sans-serif;
+
+    /* Sombras e Bordas */
+    --sombra-card: 0 4px 15px rgba(0, 0, 0, 0.07);
+    --sombra-navbar: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --borda-raio: 12px;
 }
 
+/*
+ * Reset global -> Remove margens e paddings padrão do navegador e define
+ * 'box-sizing' para um modelo de caixa mais intuitivo.
+ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Estilos base para o corpo da página (body).
+ * Inclui a configuração de Flexbox para o layout do "footer fixo".
+ */
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Melhora a renderização da fonte em alguns navegadores */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Configuração para o layout de "footer fixo" */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o body ocupe no mínimo a altura total da tela */
+}
+
+/* ==========================================================================
+   2. ESTRUTURA E LAYOUT
+   ========================================================================== */
+
+/*
+ * Estilo do container principal.
+ */
 .container {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Navbar */
+/*
+ * Faz com que o conteúdo principal (`<main>`) se expanda, empurrando
+ * o footer para a parte inferior da página em telas com pouco conteúdo.
+ */
+main.container {
+    flex: 1;
+}
+
+/*
+ * Sistema de grid simples baseado em Flexbox para organizar o conteúdo em colunas.
+ */
+.row {
+    display: grid;
+    /* Cria 3 colunas de tamanho igual que preenchem o espaço */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; /* Espaçamento entre os cards */
+}
+
+.col-md-4, .col-md-5, .col-md-7, .col {
+    box-sizing: border-box; 
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==========================================================================
+   3. COMPONENTES DA INTERFACE (UI)
+   ========================================================================== */
+
+/* --- Barra de Navegação (Navbar) --- */
 .navbar {
-    background-color: #343a40;
+    background-color: var(--cor-branco);
     padding: 1rem 0;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: var(--sombra-navbar);
+    border-bottom: 1px solid var(--cor-borda);
 }
 
 .navbar .container {
@@ -28,157 +116,144 @@ body {
 }
 
 .navbar-brand {
-    color: white;
+    color: var(--cor-primaria);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.5em;
+    font-weight: 600;
+    font-size: 1.75em;
 }
 
-.menu a {
-    color: white;
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre os itens do menu */
+}
+
+.menu a, .btn-logout {
+    color: var(--cor-texto-claro);
     text-decoration: none;
-    margin-left: 20px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    margin-left: 15px;
+    padding: 8px 16px;
+    border-radius: var(--borda-raio);
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
-.menu a:hover {
-    background-color: #495057;
+.menu a:hover, .btn-logout:hover {
+    background-color: var(--cor-fundo);
+    color: var(--cor-primaria);
 }
 
+.btn-logout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--fonte-principal);
+    font-size: inherit;
+}
 
-/* Cards */
+/* --- Cards (Produtos, Login, etc.) --- */
 .card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--cor-branco);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-raio);
+    margin-bottom: 25px;
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Efeito de "levantar" o card */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
-    padding: 20px;
+    padding: 25px;
 }
 
 .card-title {
-    font-size: 1.25em;
+    font-size: 1.2em;
+    font-weight: 600;
     margin-bottom: 10px;
+}
+
+.card-text {
+    color: var(--cor-texto-claro);
+    margin-bottom: 15px;
 }
 
 .card-img-top {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    aspect-ratio: 16 / 9; /* Força uma proporção de 16:9, evitando distorções */
+    object-fit: cover; /* Garante que a imagem preencha o espaço, cortando se necessário */
 }
 
-/* Formulários e Botões */
+/* --- Formulários e Botões --- */
 .form-label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 input[type="text"],
-select,
-input[type="number"] {
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Adicionado para consistência */
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-family: var(--fonte-principal);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.15); /* Efeito de "glow" ao focar */
 }
 
 .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-branco);
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
-    width: 100%; /* Faz o botão ocupar a largura toda */
+    font-weight: 500;
+    font-family: var(--fonte-principal);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    width: auto;
 }
 
-/* Estilo para o filtro de preço */
-.price-range-filter {
-    display: flex;
-    align-items: center;
-}
-
-.price-range-filter input {
-    width: calc(50% - 10px); /* Divide o espaço entre os dois inputs */
-    text-align: center;
-}
-
-.price-range-filter::before,
-.price-range-filter::after {
-    margin: 0 5px;
-    color: #6c757d;
-}
-
-.price-range-filter > ul {
-    display: contents; /* Remove o estilo de lista do widget */
-}
-
-.price-range-filter > ul > li {
-    display: contents; /* Remove o estilo de item de lista do widget */
+.btn:hover {
+    background-color: var(--cor-secundaria);
+    transform: translateY(-2px);
 }
 
 
-/* Outros */
-.text-center {
-    text-align: center;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -10px;
-}
-
-.form-row {
-    align-items: flex-end; /* Alinha os itens do formulário na base */
-}
-
-.col-md-4, .col-md-5, .col-md-7, .col-md-2, .col-md-1, .col {
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.col-md-4 { width: 33.33%; }
-.col-md-5 { width: 41.66%; }
-.col-md-7 { width: 58.33%; }
-.col-md-2 { width: 16.66%; }
-.col-md-1 { width: 8.33%; }
-.col { flex: 1; }
-
-
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
-
+/* --- Componentes Pequenos (Badges, Alertas) --- */
 .badge {
     display: inline-block;
-    padding: 5px 10px;
-    font-size: 0.9em;
-    border-radius: 10px;
-    color: white;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+    border-radius: 50px;
+    color: var(--cor-branco);
 }
 
-.bg-success { background-color: #28a745; }
-.bg-danger { background-color: #dc3545; }
+.bg-success { background-color: var(--cor-sucesso); }
+.bg-danger { background-color: var(--cor-perigo); }
 
 .alert {
     padding: 15px;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
     border: 1px solid transparent;
-    border-radius: .25rem;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .alert-info {
@@ -187,29 +262,190 @@ input[type="number"] {
     border-color: #bee5eb;
 }
 
-.footer {
-    background-color: #343a40;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 20px;
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
-/* Adicione este código no final do seu arquivo style.css */
-.btn-logout {
+/* ==========================================================================
+   4. ESTILOS ESPECÍFICOS DE PÁGINAS
+   ========================================================================== */
+
+/* --- Página de Detalhes do Produto --- */
+.produto-detalhe-img {
+    max-width: 100%;
+    max-height: 450px;
+    object-fit: contain; /* Mostra a imagem inteira sem cortar */
+    border-radius: var(--borda-raio);
+    margin: 0 auto;
+}
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    align-items: flex-start; /* Alinha os itens pelo topo */
+    gap: 10px;
+}
+
+.action-buttons form {
+    margin: 0;
+}
+
+/* --- Página do Carrinho --- */
+.carrinho-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+}
+
+.carrinho-tabela th,
+.carrinho-tabela td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.carrinho-tabela thead th {
+    border-bottom: 2px solid var(--cor-borda);
+    font-weight: 600;
+    color: var(--cor-texto-claro);
+    text-align: left;
+}
+
+.carrinho-tabela tbody tr {
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.carrinho-tabela tbody tr:last-child {
+    border-bottom: none;
+}
+
+.carrinho-tabela .text-right { text-align: right; }
+.carrinho-tabela .text-center { text-align: center; }
+
+.carrinho-tabela .total-row td {
+    font-weight: 600;
+    font-size: 1.1em;
+    padding-top: 20px;
+}
+
+.remover-link {
+    color: var(--cor-perigo);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.remover-link:hover {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.botoes-carrinho {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* --- Formulário de Login --- */
+.card-body form {
+    display: flex;
+    flex-direction: column;
+    min-height: 250px; 
+}
+
+.error-placeholder {
+    height: 70px; 
+    display: flex;
+    align-items: center;
+}
+
+.error-placeholder .alert {
+    width: 100%;
+    margin-bottom: 0; 
+}
+
+.btn-login {
+    width: 100%;
+    margin-top: auto; /* Empurra o botão para o final do formulário */
+}
+
+/* ==========================================================================
+   5. COMPONENTES INTERATIVOS (DROPDOWN)
+   ========================================================================== */
+
+/* --- Dropdown do Menu do Usuário --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
     background: none;
     border: none;
-    color: white;
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--fonte-principal);
     font-size: inherit;
-    text-decoration: none;
-    margin-left: 20px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-weight: 500;
+    color: var(--cor-texto-claro);
+    padding: 8px 16px;
+    margin-left: 15px;
+    border-radius: var(--borda-raio);
+    transition: all 0.3s ease;
 }
 
-.btn-logout:hover {
-    background-color: #495057;
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background-color: var(--cor-branco);
+    min-width: 180px;
+    box-shadow: var(--sombra-card);
+    border-radius: var(--borda-raio);
+    border: 1px solid var(--cor-borda);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--cor-texto);
+    font-family: var(--fonte-principal);
+    font-size: 0.95em;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--cor-fundo);
+    color: var(--cor-primaria);
+}
+
+.dropdown-divider {
+    height: 1px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    background-color: var(--cor-borda);
+}
+
+/* ==========================================================================
+   6. FOOTER (RODAPÉ)
+   ========================================================================== */
+
+.footer {
+    background-color: #34495e; /* Tom de cinza-azulado */
+    color: var(--cor-branco);
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 40px;
 }

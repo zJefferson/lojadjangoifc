@@ -8,35 +8,40 @@
         <div class="row">
             <div class="col-md-5 text-center">
                 {% if produto.imagem %}
-                    <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{ produto.nome }}">
+                    <img src="{{ produto.imagem.url }}" class="produto-detalhe-img" alt="{{ produto.nome }}">
                 {% else %}
-                    <img src="https://via.placeholder.com/400x300.png?text=Sem+Imagem" class="img-fluid" alt="Sem Imagem">
+                    <img src="https://via.placeholder.com/400x300.png?text=Sem+Imagem" class="produto-detalhe-img" alt="Sem Imagem">
                 {% endif %}
             </div>
 
             <div class="col-md-7">
-                <h2 class="card-title">{{ produto.nome }}</h2>
-                <p class="h4">R$ {{ produto.preco }}</p>
+                <h2 class="card-title" style="margin-bottom: 15px;">{{ produto.nome }}</h2>
+                <p style="font-size: 1.75em; font-weight: 600; color: var(--cor-primaria);">R$ {{ produto.preco }}</p>
+                
                 <p>
                     <strong>Status:</strong>
-                   <span class="badge {% if produto.disponivel and produto.quantidade > 0 %} bg-success {% else %} bg-danger {% endif %}">
-                    {% if produto.disponivel and produto.quantidade > 0 %}
-                        Disponível
-                    {% else %}
-                        Indisponível
-                    {% endif %}
+                    <span class="badge {% if produto.disponivel and produto.quantidade > 0 %} bg-success {% else %} bg-danger {% endif %}">
+                        {% if produto.disponivel and produto.quantidade > 0 %}
+                            Disponível
+                        {% else %}
+                            Indisponível
+                        {% endif %}
                     </span>
                 </p>
 
-                <div class="mt-4">
-                    <form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">Adicionar ao Carrinho</button>
-                    </form>
+                <div class="action-buttons">
+                    {% if produto.disponivel and produto.quantidade > 0 %}
+                        <form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Adicionar ao Carrinho</button>
+                        </form>
+                    {% else %}
+                        <button class="btn" disabled style="background-color: var(--cor-texto-claro); cursor: not-allowed;">Produto Esgotado</button>
+                    {% endif %}
                     
-                    <a href="{% url 'lista_produtos' %}" class="btn">
-                        &larr; Voltar para a lista
-                    </a>
+                    <form action="{% url 'lista_produtos' %}" method="get">
+                        <button type="submit" class="btn" style="background-color: var(--cor-texto-claro);">&larr; Voltar para a lista</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -3,26 +3,32 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="card" style="max-width: 500px; margin: 40px auto;">
+<div class="card" style="max-width: 500px; margin: auto;">
     <div class="card-body">
-        <h2 class="card-title text-center">Login</h2>
+        <h2 class="card-title">Login</h2>
+        <p>Preencha com seu usuário e senha para logar</p>
+        <br>
         
-        {% if form.errors %}
-            <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-                Seu usuário e senha não correspondem. Por favor, tente novamente.
-            </div>
-        {% endif %}
-
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
-            <div style="margin-bottom: 15px;">
+
+            <div class="form-group">
                 <label class="form-label">Usuário:</label>
                 {{ form.username }}
             </div>
-            <div style="margin-bottom: 15px;">
+
+            <div class="form-group">
                 <label class="form-label">Senha:</label>
                 {{ form.password }}
             </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Seu usuário e senha não correspondem.
+                </div>
+            {% endif %}
+            <br>
+
             <button type="submit" class="btn">Entrar</button>
         </form>
     </div>

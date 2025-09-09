@@ -1,35 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Pesquisar Produtos</h1>
+<h1 class="text-center" style="margin-bottom: 30px;">Pesquisar Produtos</h1>
 
 <div class="card">
     <div class="card-body">
         <form method="get">
-            <div class="row form-row">
-                <div class="col-md-5">
-                    <label class="form-label">Nome do Produto</label>
-                    {{ filter.form.nome }}
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Faixa de Preço</label>
-                    <div class="price-range-filter">
-                         {{ filter.form.preco }}
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Disponibilidade</label>
-                    {{ filter.form.disponivel }}
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn">Filtrar</button>
-                </div>
+            <div style="margin-bottom: 20px;">
+                <label class="form-label">Nome do Produto</label>
+                {{ filter.form.nome }}
             </div>
+
+            <div style="margin-bottom: 20px;">
+                <label class="form-label">Faixa de Preço</label>
+                {{ filter.form.preco }}
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label class="form-label">Disponibilidade</label>
+                {{ filter.form.disponivel }}
+            </div>
+
+            <div>
+                <button type="submit" class="btn" style="width: 100%;">Filtrar</button>
+            </div>
+            
         </form>
     </div>
 </div>
 
-<h2>Resultados</h2>
+<h2 style="margin-top: 40px;">Resultados</h2>
 <div class="row">
     {% for produto in filter.qs %}
     <div class="col-md-4">

@@ -4,19 +4,19 @@
 {% block title %}Seu Carrinho{% endblock %}
 
 {% block content %}
-    <h1>Seu Carrinho de Compras</h1>
+    <h1 class="text-center" style="margin-bottom: 30px;">Seu Carrinho de Compras</h1>
 
     {% if carrinho|length > 0 %}
         <div class="card">
             <div class="card-body">
-                <table style="width:100%; text-align: left;">
+                <table class="carrinho-tabela">
                     <thead>
                         <tr>
                             <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Preço Unitário</th>
-                            <th>Preço Total</th>
-                            <th>Ação</th>
+                            <th class="text-center">Quantidade</th>
+                            <th class="text-right">Preço Unitário</th>
+                            <th class="text-right">Preço Total</th>
+                            <th class="text-center">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,18 +24,18 @@
                             {% with produto=item.produto %}
                             <tr>
                                 <td>{{ produto.nome }}</td>
-                                <td>{{ item.quantidade }}</td>
-                                <td>R$ {{ item.preco }}</td>
-                                <td>R$ {{ item.preco_total }}</td>
-                                <td>
-                                    <a href="{% url 'remover_do_carrinho' produto.id %}" style="color: red; text-decoration: none;">Remover</a>
+                                <td class="text-center">{{ item.quantidade }}</td>
+                                <td class="text-right">R$ {{ item.preco }}</td>
+                                <td class="text-right">R$ {{ item.preco_total }}</td>
+                                <td class="text-center">
+                                    <a href="{% url 'remover_do_carrinho' produto.id %}" class="remover-link">Remover</a>
                                 </td>
                             </tr>
                             {% endwith %}
                         {% endfor %}
-                        <tr style="font-weight: bold; border-top: 1px solid #ccc;">
-                            <td colspan="3" style="text-align: right; padding-top: 10px;">Total:</td>
-                            <td style="padding-top: 10px;">R$ {{ carrinho.get_total_preco }}</td>
+                        <tr class="total-row">
+                            <td colspan="3" class="text-right">Total:</td>
+                            <td class="text-right">R$ {{ carrinho.get_total_preco }}</td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -43,9 +43,9 @@
             </div>
         </div>
 
-        <div style="margin-top: 20px; text-align: right;">
+        <div class="botoes-carrinho">
              <a href="{% url 'lista_produtos' %}" class="btn">Continuar comprando</a>
-             <a href="{% url 'checkout' %}" class="btn" style="background-color: #28a745;">Finalizar Compra</a>
+             <a href="{% url 'checkout' %}" class="btn" style="background-color: var(--cor-sucesso);">Finalizar Compra</a>
         </div>
 
     {% else %}
